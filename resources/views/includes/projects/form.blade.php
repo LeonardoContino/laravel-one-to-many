@@ -32,6 +32,23 @@
       <input type="text" class="form-control" id="slug" value="{{Str::slug(old('title', $project->title))}}">
     </div>
   </div>
+  <div class="col-3">
+    <div class="mb-3">
+      <label for="type_id" name="type_id" class="form-label">Types</label>
+      <select name="type_id" id="type_id"  class="form-select @error('type_id') is_invalid @enderror">
+        <option value="">--</option>
+        @foreach ($types as $type)
+        <option @if(old('type_id', $project->type_id) == $type->id) selected @endif value="{{$type->id}}">{{ $type->label}}</option> 
+        @endforeach
+      </select>
+      @error('rype_id')
+      <div class="invalid-feedback">
+        {{ $message }}
+      </div>
+    @enderror
+    </div>
+
+  </div>
   <div class="col-11">
     <div class="mb-3">
       <label for="image" class="form-label">Immagine</label>

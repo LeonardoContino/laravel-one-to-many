@@ -14,7 +14,7 @@
           <th scope="col">#</th>
           <th scope="col">Titolo</th>
           <th scope="col">slug</th>
-          <th scope="col">Data</th>
+          <th scope="col">Tipo di progetto</th>
           <th scope="col">Aggiornato il</th>
 
         </tr>
@@ -25,7 +25,8 @@
             <th scope="row">{{$project->id}}</th>
             <td>{{$project->title}}</td>
             <td>{{$project->slug}}</td>
-            <td>{{$project->date}}</td>
+            <td>@if ($project->type) <span class="badge" style="background-color:{{$project->type->color}}">{{$project->type->label}}</span>
+            @endif</td>
             <td>{{$project->updated_at}}</td>
             <td>
                 <div class="d-flex align-items-center justify-content-end gap-2">

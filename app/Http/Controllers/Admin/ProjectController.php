@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Project;
+use App\Models\Type;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Arr;
@@ -27,7 +28,8 @@ class ProjectController extends Controller
     public function create()
     {
         $project = new Project;
-        return view('admin.projects.create', compact('project'));
+        $types = Type::orderBy('label')->get();
+        return view('admin.projects.create', compact('project', 'types'));
     }
 
     /**
@@ -38,7 +40,8 @@ class ProjectController extends Controller
         $request->validate([
             'title' => 'required|string|unique:projects',
             'content' => 'required|string',
-            'image' => 'nullable|image'
+            'image' => 'nullable|image',
+            'type_id' => 'nullable|exists:types,id'
         ],[
                 'title.required' => 'il titolo è obbligatorio',
                 'title.unique' => "esiste già un progetto $request->title",
@@ -46,6 +49,7 @@ class ProjectController extends Controller
                 'title.max' => 'il titolo deve avere max 20 caratteri',
                 'content.required' => 'il progetto deve avere un contenuto',
                 'image.image' => 'immagine non valida',
+                'type_id' => 'Tipo non valido'
 
         ]);
         $data = $request->all();
@@ -78,8 +82,9 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
+        $types = Type::orderBy('label')->get();
         
-        return view('admin.projects.edit', compact('project'));
+        return view('admin.projects.edit', compact('project', 'types'));
     }
 
     /**
@@ -90,7 +95,8 @@ class ProjectController extends Controller
         $request->validate([
             'title' => ['required','string',Rule::unique('projects')->ignore($project->id)],
             'content' => 'required|string',
-            'image' => 'nullable|image'],
+            'image' => 'nullable|image',
+            'type_id' => 'nullable|exists:types,id'],
             [
                 'title.required' => 'il titolo è obbligatorio',
                 'title.unique' => "esiste già un progetto $request->title",
@@ -98,6 +104,7 @@ class ProjectController extends Controller
                 'title.max' => 'il titolo deve avere max 20 caratteri',
                 'content.required' => 'il progetto deve avere un contenuto',
                 'image.image' => 'immagine non valida',
+                'type_id' => 'Tipo non valido'
 
             ]);
         $data = $request->all();

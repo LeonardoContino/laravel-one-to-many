@@ -12,7 +12,7 @@ class TypeSeeder extends Seeder
     /**
      * Run the database seeds.
      */
-    public function run(Generator $faker): void
+    public function run(Faker $faker): void
     {
         $labels = ['frontEnd', 'Backend', 'FullStack', 'UX/UI', 'ProjectDesign'];
 
