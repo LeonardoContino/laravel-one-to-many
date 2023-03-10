@@ -9,5 +9,8 @@ class Project extends Model
 {
     use HasFactory;
     protected $fillable = ['title', 'content', 'image', 'slug'];
-    
+
+    public function type(){
+        return $this->belognsTo(Type::class);
+    }
 }
