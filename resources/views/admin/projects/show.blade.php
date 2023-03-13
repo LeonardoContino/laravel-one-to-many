@@ -10,8 +10,8 @@
     
     </h1>
     
-    
-    <a href="{{route('admin.projects.index')}}" class="btn btn-secondary">Torna ai Progetti</a>
+    <div class="d-flex justify-content-end gap-3">
+        <a href="{{route('admin.projects.index')}}" class="btn btn-secondary">Torna ai Progetti</a>
     <a href="{{route('admin.projects.edit', $project->id)}}" class="btn btn-primary">Modifica progetto</a>
 
     <form action="{{route('admin.projects.destroy', $project->id)}}" method="POST" class="delete-form" dataEntity="progetto">
@@ -19,6 +19,8 @@
         @method('DELETE')
         <button class="btn btn-small btn-danger ">Elimina</button>
     </form>
+    </div>
+    
 </div>
 
 
@@ -29,8 +31,10 @@
     <p>{{$project->content}}</p>
     
 </div>
-<div class="mt-3">
-    <h5>Data: {{$project->updated_at}}</h5>
+<div class="mt-3 d-flex gap-2">
+    <h5><strong>Data:</strong>{{$project->updated_at}}</h5>
+    <h5><strong>Categoria:</strong>{{$project->type?->label}}</h5>
+
 
 </div>
 
